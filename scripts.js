@@ -5,6 +5,9 @@ const posts = [
     author: "Agatha Marrow",
     date: "1925",
     excerpt: "Golden pages, lavender notes, and the quiet rituals of afternoon reading. A blogpost about memory and the analog heart.",
+    image: "images/dusty-jacket.jpg",
+    tags: ["memory", "analog", "nostalgia"],
+    ratings: { humor: 3, complexity: 4, kaas: 2, complexity5: 4, kaas2: 2 },
     content: [
       "In a room lit by diffused afternoon light, a volume rests quietly with a cover softened by years of hands. This post explores the feeling of turning pages that have held stories for generations.",
       "There is a rhythm to the old book world: measured, unhurried, and always tender. Every sentence is a small ceremony; every footnote, a secret whisper from the past.",
@@ -17,10 +20,13 @@ const posts = [
     author: "Beatrice Holloway",
     date: "1948",
     excerpt: "Soft paper, hard margins, and the way stories carry a time-stamped voice across decades.",
+    image: "images/lost-reader.jpg",
+    tags: ["letters", "vintage", "storytelling"],
+    ratings: { humor: 2, complexity: 5, patriarchy: 4 },
     content: [
       "Letters are one of the oldest forms of storytelling, a quiet confession between author and reader. This piece explores why handwritten notes feel like bridges to other eras.",
       "In the old book lady palette, every pastel hue becomes a memory, and every italic curve is a gentle invitation to linger.",
-      "The act of reading a letter inside a book is a reminder that stories are not only written, they are kept, treasured, and returned to across time."
+      "The act of reading a letter inside a book is² a reminder that stories are not only written, they are kept, treasured, and returned to across time."
     ]
   },
   {
@@ -29,6 +35,9 @@ const posts = [
     author: "Vivian Reed",
     date: "1963",
     excerpt: "A meditation on how old books still feel backstage in a modern life, full of warmth and quiet rebellion.",
+    image: "images/ink-lace.jpg",
+    tags: ["feminism", "rebellion", "literature"],
+    ratings: { humor: 5, complexity: 7, patriarchy: 9 },
     content: [
       "There is courage in the quietest pages, where soft-spoken ideas persist more gently than any shouted manifesto.",
       "This post celebrates the textures of paper and lace, the worn corners of chapter headings, and the way stories can still feel fresh in a world that moves quickly.",
@@ -41,6 +50,9 @@ const posts = [
     author: "Vivian Reed",
     date: "1977",
     excerpt: "A meditation on how old books still feel backstage in a modern life, full of warmth and quiet rebellion.",
+    image: "images/dirk.jpg",
+    tags: ["feminism", "narrative"],
+    ratings: { humor: 6, complexity: 8, patriarchy: 8 },
     content: [
       "There is courage in the quietest pages, where soft-spoken ideas persist more gently than any shouted manifesto.",
       "This post celebrates the textures of paper and lace, the worn corners of chapter headings, and the way stories can still feel fresh in a world that moves quickly.",
@@ -53,18 +65,9 @@ const posts = [
     author: "Vivian Reed",
     date: "1978",
     excerpt: "A meditation on how old books still feel backstage in a modern life, full of warmth and quiet rebellion.",
-    content: [
-      "There is courage in the quietest pages, where soft-spoken ideas persist more gently than any shouted manifesto.",
-      "This post celebrates the textures of paper and lace, the worn corners of chapter headings, and the way stories can still feel fresh in a world that moves quickly.",
-      "A modern sensibility wrapped in vintage sentiment, the narrative honors both timeless grace and present-day curiosity."
-    ]
-  },
-  {
-    id: 5,
-    title: "Dirk 26",
-    author: "Vivian Reed",
-    date: "1978",
-    excerpt: "A meditation on how old books still feel backstage in a modern life, full of warmth and quiet rebellion.",
+    image: "images/dirk-2.jpg",
+    tags: ["feminism", "literature", "analog"],
+    ratings: { humor: 7, complexity: 6, patriarchy: 10 },
     content: [
       "There is courage in the quietest pages, where soft-spoken ideas persist more gently than any shouted manifesto.",
       "This post celebrates the textures of paper and lace, the worn corners of chapter headings, and the way stories can still feel fresh in a world that moves quickly.",
@@ -78,6 +81,79 @@ function getQueryParam(key) {
   return params.get(key);
 }
 
+function getAllTags(posts) {
+  const tagsSet = new Set();
+  posts.forEach((post) => {
+    if (post.tags) {
+      post.tags.forEach((tag) => tagsSet.add(tag));
+    }
+  });
+  return Array.from(tagsSet).sort();
+}
+
+function getActiveTag() {
+  return getQueryParam('tag');
+}
+
+function filterPostsByTag(posts, tag) {
+  if (!tag) return posts;
+  return posts.filter((post) => post.tags && post.tags.includes(tag));
+}
+
+function renderTagFilter(allTags) {
+  const filterContainer = document.getElementById('tag-filter-container');
+  if (!filterContainer) return;
+
+  const activeTag = getActiveTag();
+  const filterHTML = `
+    <div class="tag-filter">
+      <p class="filter-label">Filter by tag:</p>
+      <div class="tag-buttons">
+        <a href="index.html" class="tag-button ${!activeTag ? 'active' : ''}">
+          All posts
+        </a>
+        ${allTags.map((tag) => `
+          <a href="index.html?tag=${encodeURIComponent(tag)}" class="tag-button ${activeTag === tag ? 'active' : ''}">
+            ${tag}
+          </a>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  filterContainer.innerHTML = filterHTML;
+}
+
+function renderPostTags(tags) {
+  if (!tags || tags.length === 0) return '';
+  return `
+    <div class="post-tags">
+      ${tags.map((tag) => `
+        <a href="index.html?tag=${encodeURIComponent(tag)}" class="tag-badge">${tag}</a>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderPostRatings(ratings) {
+  if (!ratings || Object.keys(ratings).length === 0) return '';
+  return `
+    <div class="ratings-container">
+      <h3 class="ratings-title">Book Ratings</h3>
+      <div class="ratings-grid">
+        ${Object.entries(ratings).map(([key, value]) => `
+          <div class="rating-item">
+            <div class="rating-label">${key.charAt(0).toUpperCase() + key.slice(1)}</div>
+            <div class="rating-bar">
+              <div class="rating-line" style="left: ${(value / 10) * 100}%"></div>
+            </div>
+            <div class="rating-value">${value}/10</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
 function loadPosts() {
   return posts;
 }
@@ -85,11 +161,13 @@ function loadPosts() {
 function createTimelineItem(post) {
   const item = document.createElement('article');
   item.className = 'timeline-item';
+  const tagsHTML = renderPostTags(post.tags);
   item.innerHTML = `
     <span class="stamp">${post.date}</span>
     <div class="timeline-card">
       <h2>${post.title}</h2>
       <p>${post.excerpt}</p>
+      ${tagsHTML}
       <a href="post.html?id=${post.id}">Read the post</a>
     </div>
   `;
@@ -107,11 +185,15 @@ function createTimelineItem(post) {
 function renderTimeline(posts) {
   const panel = document.getElementById('timeline-panel');
   if (!panel) return;
-  if (posts.length === 0) {
-    panel.innerHTML += '<p class="timeline-empty">No posts available. Ensure posts.json is in the same folder and open the page from a local server, e.g. run <code>python -m http.server</code> in this folder.</p>';
+  
+  const activeTag = getActiveTag();
+  const filteredPosts = filterPostsByTag(posts, activeTag);
+  
+  if (filteredPosts.length === 0) {
+    panel.innerHTML = '<p class="timeline-empty">No posts found with this tag.</p>';
     return;
   }
-  posts.forEach((post) => panel.appendChild(createTimelineItem(post)));
+  filteredPosts.forEach((post) => panel.appendChild(createTimelineItem(post)));
 }
 
 function renderPost(posts) {
@@ -120,11 +202,27 @@ function renderPost(posts) {
   const title = document.getElementById('post-title');
   const meta = document.getElementById('post-meta');
   const body = document.getElementById('post-body');
+  const tagsContainer = document.getElementById('post-tags');
+  const imageContainer = document.getElementById('post-image');
+  const ratingsContainer = document.getElementById('post-ratings');
 
   if (!post || !title || !meta || !body) return;
 
   title.textContent = post.title;
   meta.textContent = `Published ${post.date} · by ${post.author}`;
+  
+  if (tagsContainer) {
+    tagsContainer.innerHTML = renderPostTags(post.tags);
+  }
+  
+  if (imageContainer && post.image) {
+    imageContainer.innerHTML = `<img src="${post.image}" alt="${post.title}" class="post-image" />`;
+  }
+
+  if (ratingsContainer && post.ratings) {
+    ratingsContainer.innerHTML = renderPostRatings(post.ratings);
+  }
+  
   body.innerHTML = post.content
     .map((paragraph, index) => {
       if (index === 1) {
@@ -135,9 +233,26 @@ function renderPost(posts) {
     .join('');
 }
 
+function setActiveNavLink() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const navLinks = document.querySelectorAll('.nav-link');
+  
+  navLinks.forEach((link) => {
+    const href = link.getAttribute('href');
+    if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
 async function init() {
   const posts = await loadPosts();
+  setActiveNavLink();
   if (document.getElementById('timeline-panel')) {
+    const allTags = getAllTags(posts);
+    renderTagFilter(allTags);
     renderTimeline(posts);
   }
   if (document.getElementById('post-title')) {
