@@ -58,6 +58,18 @@ const posts = [
       "This post celebrates the textures of paper and lace, the worn corners of chapter headings, and the way stories can still feel fresh in a world that moves quickly.",
       "A modern sensibility wrapped in vintage sentiment, the narrative honors both timeless grace and present-day curiosity."
     ]
+  },
+  {
+    id: 5,
+    title: "Dirk 26",
+    author: "Vivian Reed",
+    date: "1978",
+    excerpt: "A meditation on how old books still feel backstage in a modern life, full of warmth and quiet rebellion.",
+    content: [
+      "There is courage in the quietest pages, where soft-spoken ideas persist more gently than any shouted manifesto.",
+      "This post celebrates the textures of paper and lace, the worn corners of chapter headings, and the way stories can still feel fresh in a world that moves quickly.",
+      "A modern sensibility wrapped in vintage sentiment, the narrative honors both timeless grace and present-day curiosity."
+    ]
   }
 ];
 
