@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Classic Blog Post</title>
+  <title>Her Dutch stories</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <nav class="navbar">
     <div class="navbar-content">
-      <div class="navbar-title">Edith's Library</div>
+      <a class="navbar-title" href="index.html">Her Dutch stories</a>
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link">Timeline</a></li>
         <li><a href="about.html" class="nav-link">About Me</a></li>
@@ -18,18 +18,16 @@
     </div>
   </nav>
   <div class="page-shell">
-    <header class="hero hero-post">
-      <div class="hero-content">
-        <p class="eyebrow">Classic Blogpost</p>
-        <h1 id="post-title">The Dusty Dust Jacket</h1>
-        <p class="meta" id="post-meta">Published 1925 · by Agatha Marrow</p>
-        <div id="post-tags"></div>
-      </div>
-    </header>
-
     <main class="main-content post-page">
       <div id="post-image" class="post-image-container"></div>
+      <header class="post-heading">
+        <h1 id="post-title">The Dusty Dust Jacket</h1>
+        <p class="post-subtitle" id="post-subtitle">A close reading of memory, paper, and the quiet life of a well-loved book.</p>
+        <p class="meta" id="post-meta">Published 1925 · by Agatha Marrow</p>
+        <div id="post-tags"></div>
+      </header>
       <article class="post-card">
+        <div id="post-ratings" class="post-ratings-section"></div>
         <div class="post-body" id="post-body">
           <p>In a room lit by diffused afternoon light, a volume rests quietly with a cover softened by years of hands. This post explores the feeling of turning pages that have held stories for generations.</p>
           <h2>On paper and pace</h2>
@@ -38,7 +36,12 @@
           <h2>A palette of warm memory</h2>
           <p>The page edges have a soft amber halo, the typography is generous, and the minimal layout lets the words feel spacious and calm.</p>
         </div>
-        <div id="post-ratings" class="post-ratings-section"></div>
+        <section class="review-quotes" aria-labelledby="review-quotes-title">
+          <h2 id="review-quotes-title">Selected quotes</h2>
+          <blockquote>"A book becomes part of a life long before it becomes part of a shelf."</blockquote>
+          <blockquote>"The oldest pages still know how to make an afternoon feel endless."</blockquote>
+          <blockquote>"Memory keeps its shape in the small rituals: a pressed flower, a pencilled note, a familiar crease."</blockquote>
+        </section>
         <div class="post-footer">
           <a class="button" href="index.html">Back to timeline</a>
         </div>
