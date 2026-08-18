@@ -6,10 +6,13 @@ function getQueryParam(key) {
 }
 
 function getAllTags(posts) {
+  const lang = getLanguage();
+  const tagsKey = lang === 'en' ? 'tags_en' : 'tags_nl';
   const tagsSet = new Set();
   posts.forEach((post) => {
-    if (post.tags) {
-      post.tags.forEach((tag) => tagsSet.add(tag));
+    const tags = post[tagsKey] || post.tags;
+    if (tags) {
+      tags.forEach((tag) => tagsSet.add(tag));
     }
   });
   return Array.from(tagsSet).sort();
@@ -21,7 +24,12 @@ function getActiveTag() {
 
 function filterPostsByTag(posts, tag) {
   if (!tag) return posts;
-  return posts.filter((post) => post.tags && post.tags.includes(tag));
+  const lang = getLanguage();
+  const tagsKey = lang === 'en' ? 'tags_en' : 'tags_nl';
+  return posts.filter((post) => {
+    const tags = post[tagsKey] || post.tags;
+    return tags && tags.includes(tag);
+  });
 }
 
 function renderTagFilter(allTags, posts) {
