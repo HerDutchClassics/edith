@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  --bg: #fbf8f2;
+  --bg: #fefcfa;
   --panel: #fffdf9;
   --text: #2a1111;
   --muted: #6c3b3b;
@@ -70,6 +70,30 @@ body {
   color: var(--accent);
   text-decoration: none;
   font-weight: 600;
+}
+
+.hero-logo {
+  width: 240px;
+  height: 240px;
+  object-fit: contain;
+  margin: 0 auto 30px;
+  display: block;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.post-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  background-color: var(--bg);
 }
 
 .nav-links {
@@ -163,7 +187,7 @@ body {
 .hero h1 {
   margin: 0;
   font-size: clamp(3.2rem, 6vw, 5.4rem);
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: -0.04em;
   color: var(--accent);
 }
