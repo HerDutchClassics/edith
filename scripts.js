@@ -1,22 +1,4 @@
-const posts = [
-  {
-    id: 0,
-    title: "The Dusty Dust Jacket",
-    subtitle: "A close reading of memory, paper, and the quiet life of a well-loved book.",
-    author: "Agatha Marrow",
-    date: "1925",
-    excerpt: "Golden pages, lavender notes, and the quiet rituals of afternoon reading. A blogpost about memory and the analog heart.",
-    image: "images/dusty-jacket.jpg",
-    tags: ["memory", "analog", "nostalgia"],
-    ratings: { humor: 3, complexity: 4, kaas: 2, complexity5: 4, kaas2: 2 },
-    content: [
-      "In a room lit by diffused afternoon light, a volume rests quietly with a cover softened by years of hands. This post explores the feeling of turning pages that have held stories for generations.",
-      "There is a rhythm to the old book world: measured, unhurried, and always tender. Every sentence is a small ceremony; every footnote, a secret whisper from the past.",
-      "The page edges have a soft amber halo, the typography is generous, and the minimal layout lets the words feel spacious and calm.",
-      "Reading it feels like opening a drawer of carefully kept things: nothing insists on being noticed, yet every detail rewards a second look."
-    ]
-  }
-];
+let postsData = [];
 
 function getQueryParam(key) {
   const params = new URLSearchParams(window.location.search);
@@ -106,8 +88,24 @@ function renderPostRatings(ratings) {
   `;
 }
 
-function loadPosts() {
-  return posts;
+function getLanguage() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  return currentPage.includes('_en') ? 'en' : 'nl';
+}
+
+async function loadPosts() {
+  if (postsData.length > 0) return postsData;
+  
+  try {
+    const response = await fetch('posts-data.json');
+    const data = await response.json();
+    postsData = data.posts;
+  } catch (error) {
+    console.error('Error loading posts:', error);
+    postsData = [];
+  }
+  
+  return postsData;
 }
 
 function createTimelineItem(post) {
@@ -163,8 +161,10 @@ function renderTimeline(posts, sortOrder = 'recent') {
 }
 
 function renderPost(posts) {
-  const id = Number(getQueryParam('id'));
+  const id = Number(getQueryParam('id')) || 0;
   const post = posts.find((item) => item.id === id) || posts[0];
+  const lang = getLanguage();
+  
   const title = document.getElementById('post-title');
   const subtitle = document.getElementById('post-subtitle');
   const meta = document.getElementById('post-meta');
@@ -175,9 +175,14 @@ function renderPost(posts) {
 
   if (!post || !title || !meta || !body) return;
 
-  title.textContent = post.title;
+  // Handle language-specific content
+  const titleKey = `title_${lang}`;
+  const subtitleKey = `subtitle_${lang}`;
+  const bodyKey = `body_${lang}`;
+  
+  title.textContent = post[titleKey] || post.title || 'Untitled';
   if (subtitle) {
-    subtitle.textContent = post.subtitle || post.excerpt;
+    subtitle.textContent = post[subtitleKey] || post.subtitle || '';
   }
   meta.textContent = `Published ${post.date} · by ${post.author}`;
   
@@ -186,22 +191,25 @@ function renderPost(posts) {
   }
   
   if (imageContainer && post.image) {
-    imageContainer.innerHTML = `<img src="${post.image}" alt="${post.title}" class="post-image" />`;
+    imageContainer.innerHTML = `<img src="${post.image}" alt="${post[titleKey]}" class="post-image" />`;
   }
 
-  if (ratingsContainer && post.ratings) {
-    ratingsContainer.innerHTML = renderPostRatings(post.ratings);
-  }
-  
-  body.innerHTML = post.content
-    .map((paragraph, index) => {
-      if (index === 1) {
-        return `<h2>A gentle memory</h2><p>${paragraph}</p>`;
+  // Render body with support for regular text, headings, and blockquotes
+  const bodyContent = post[bodyKey] || [];
+  body.innerHTML = bodyContent
+    .map((item) => {
+      if (typeof item === 'string') {
+        return `<p>${item}</p>`;
+      } else if (item.type === 'heading') {
+        return `<h2>${item.text}</h2>`;
+      } else if (item.type === 'blockquote') {
+        return `<blockquote>"${item.text}"</blockquote>`;
       }
-      return `<p>${paragraph}</p>`;
+      return '';
     })
     .join('');
 }
+
 
 function setActiveNavLink() {
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';

@@ -1,0 +1,63 @@
+{
+  "posts": [
+    {
+      "id": 0,
+      "title_nl": "Het stoffige stofomslag",
+      "title_en": "The Dusty Dust Jacket",
+      "subtitle_nl": "Een close reading van geheugen, papier en het stille leven van een geliefd boek.",
+      "subtitle_en": "A close reading of memory, paper, and the quiet life of a well-loved book.",
+      "author": "Agatha Marrow",
+      "date": "1925",
+      "tags": ["memory", "analog", "nostalgia"],
+      "image": "images/dusty-jacket.jpg",
+      "body_nl": [
+        "In een kamer verlicht door diffuus middaglicht ligt een boek rustig met een omslag verzacht door jaren van handen. Deze bijdrage onderzoekt het gevoel van het omslaan van pagina's die al generaties lang verhalen bevatten.",
+        {
+          "type": "heading",
+          "text": "Over papier en tempo"
+        },
+        "Er is een ritme in de wereld van oude boeken: bedachtzaam, onverhaast en altijd teder. Elke zin is een kleine ceremonie; elke voetnoot, een geheim gefluister uit het verleden.",
+        {
+          "type": "blockquote",
+          "text": "Boeken zijn spiegels: je ziet er alleen in wat je al in jezelf hebt."
+        },
+        {
+          "type": "heading",
+          "text": "Een palet van warme herinnering"
+        },
+        "De pagina­randen hebben een zacht amberkleurig halo, de typografie is gul, en de minimale opmaak laat de woorden ruimtelijk en rustig aanvoelen."
+      ],
+      "body_en": [
+        "In a room lit by diffused afternoon light, a volume rests quietly with a cover softened by years of hands. This post explores the feeling of turning pages that have held stories for generations.",
+        {
+          "type": "heading",
+          "text": "On paper and pace"
+        },
+        "There is a rhythm to the old book world: measured, unhurried, and always tender. Every sentence is a small ceremony; every footnote, a secret whisper from the past.",
+        {
+          "type": "blockquote",
+          "text": "Books are mirrors: you only see in them what you already have inside you."
+        },
+        {
+          "type": "heading",
+          "text": "A palette of warm memory"
+        },
+        "The page edges have a soft amber halo, the typography is generous, and the minimal layout lets the words feel spacious and calm."
+      ],
+      "quotes": [
+        {
+          "text_en": "A book becomes part of a life long before it becomes part of a shelf.",
+          "text_nl": "Een boek wordt onderdeel van een leven lang voordat het onderdeel van een boekenplank wordt."
+        },
+        {
+          "text_en": "The oldest pages still know how to make an afternoon feel endless.",
+          "text_nl": "De oudste pagina's weten nog steeds hoe je een middag eindeloos laat aanvoelen."
+        },
+        {
+          "text_en": "Memory keeps its shape in the small rituals: a pressed flower, a pencilled note, a familiar crease.",
+          "text_nl": "Geheugen behoudt zijn vorm in kleine rituelen: een geperste bloem, een potloodnota, een vertrouwde vouw."
+        }
+      ]
+    }
+  ]
+}
